@@ -883,6 +883,8 @@ html, body {
 
 /* EDIT: password */
 var PASSWORD = '1610';
+   var SHEET_URL = 'https://script.google.com/macros/s/AKfycbwpD4nl9eLVV9dIxGN_aXr-jpIaMcYX2eN29-JdHD7FVCLILJ37vryjbphafdXENdvT/exec';
+   
 
 /* EDIT: poem lines — use null for a blank spacer line */
 var POEM_LINES = [
@@ -1147,10 +1149,25 @@ function buildPoem() {
 }
 
 /* ── NAVIGATION ── */
-function goForgive() { goTo('s-forgive'); }
-function doNo()      { goTo('s-no'); }
-function doYes()     { goTo('s-wish', startWish); }
+function doYes() {
+  recordAnswer('Yes 🌸 She forgave you!');
+  goTo('s-wish', startWish);
+}
 
+function doNo() {
+  recordAnswer('No 🥺 She said no (yet)');
+  goTo('s-no');
+}
+
+function recordAnswer(answer) {
+  fetch(https://script.google.com/macros/s/AKfycbwpD4nl9eLVV9dIxGN_aXr-jpIaMcYX2eN29-JdHD7FVCLILJ37vryjbphafdXENdvT/exec, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ answer: answer })
+  }).catch(function() {});
+}
+   
 /* ── WISH BOX ── */
 function startWish() {
   var items = document.querySelectorAll('.wish-item');
